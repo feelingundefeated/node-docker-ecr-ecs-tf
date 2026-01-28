@@ -22,7 +22,7 @@ This project replaces manual console provisioning with a reproducible Terraform 
 | **Networking** | VPC / Security Groups | Strict ingress rules allowing traffic only on port 3000. |
 | **IaC** | Terraform (HCL) | Fully automated infrastructure provisioning. |
 
-## �� Deployment Guide
+## 🚀 Deployment Guide
 
 ### Prerequisites
 * AWS CLI configured (`us-west-2` region).
@@ -42,14 +42,14 @@ docker build -t my-first-ecr-repo ./app
 # 3. Tag & Push
 docker tag my-first-ecr-repo:latest <YOUR_AWS_ACCOUNT_ID>[.dkr.ecr.us-west-2.amazonaws.com/my-first-ecr-repo:latest](https://.dkr.ecr.us-west-2.amazonaws.com/my-first-ecr-repo:latest)
 docker push <YOUR_AWS_ACCOUNT_ID>[.dkr.ecr.us-west-2.amazonaws.com/my-first-ecr-repo:latest](https://.dkr.ecr.us-west-2.amazonaws.com/my-first-ecr-repo:latest)
+
 2. Provision Infrastructure
 Deploy the cloud resources using Terraform:
-
-Bash
 cd terraform/
 terraform init
 terraform plan
 terraform apply --auto-approve
+
 🔧 Technical Challenges & Solutions
 Issue: awsvpc Network Mode Connectivity
 Problem: The ECS Tasks initially failed to start with a Network Configuration must be provided error.
@@ -58,6 +58,4 @@ Solution: I configured the aws_ecs_service resource to explicitly reference the 
 
 🧹 Cleanup
 To destroy all resources and prevent AWS charges:
-
-Bash
 terraform destroy --auto-approve
