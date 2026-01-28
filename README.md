@@ -29,10 +29,8 @@ This project replaces manual console provisioning with a reproducible Terraform 
 * Terraform installed.
 * Docker Desktop running.
 
-### 1. Build & Push Image
-Authenticate with AWS ECR and push the Docker image to the `us-west-2` region.
-
-```bash
+1. Build & Push Image
+Authenticate with AWS ECR and push the Docker image to the us-west-2 region.text
 # 1. Login to ECR
 aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin <YOUR_AWS_ACCOUNT_ID>.dkr.ecr.us-west-2.amazonaws.com
 
@@ -40,22 +38,21 @@ aws ecr get-login-password --region us-west-2 | docker login --username AWS --pa
 docker build -t my-first-ecr-repo ./app
 
 # 3. Tag & Push
-docker tag my-first-ecr-repo:latest <YOUR_AWS_ACCOUNT_ID>[.dkr.ecr.us-west-2.amazonaws.com/my-first-ecr-repo:latest](https://.dkr.ecr.us-west-2.amazonaws.com/my-first-ecr-repo:latest)
-docker push <YOUR_AWS_ACCOUNT_ID>[.dkr.ecr.us-west-2.amazonaws.com/my-first-ecr-repo:latest](https://.dkr.ecr.us-west-2.amazonaws.com/my-first-ecr-repo:latest)
+docker tag my-first-ecr-repo:latest <YOUR_AWS_ACCOUNT_ID>.dkr.ecr.us-west-2.amazonaws.com/my-first-ecr-repo:latest
+docker push <YOUR_AWS_ACCOUNT_ID>.dkr.ecr.us-west-2.amazonaws.com/my-first-ecr-repo:latest
 
 2. Provision Infrastructure
-Deploy the cloud resources using Terraform:
-cd terraform/
+Deploy the cloud resources using Terraform:textcd terraform/
 terraform init
 terraform plan
 terraform apply --auto-approve
+Warning: --auto-approve skips confirmation; use with caution to avoid unintended changes.
 
-🔧 Technical Challenges & Solutions
+Technical Challenges & Solutions
 Issue: awsvpc Network Mode Connectivity
-Problem: The ECS Tasks initially failed to start with a Network Configuration must be provided error.
-
+Problem: The ECS Tasks initially failed to start with a "Network Configuration must be provided" error.
 Solution: I configured the aws_ecs_service resource to explicitly reference the VPC Subnets and Security Groups. This ensures Fargate tasks receive valid ENIs (Elastic Network Interfaces) to communicate with the internet and pull images from ECR.
 
-🧹 Cleanup
+Cleanup
 To destroy all resources and prevent AWS charges:
-terraform destroy --auto-approve
+textterraform destroy --auto-approve
